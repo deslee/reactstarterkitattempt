@@ -11,6 +11,7 @@ import path from 'path';
 import webpack from 'webpack';
 import merge from 'lodash.merge';
 var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
+import globals from '../src/globals'
 
 const DEBUG = !process.argv.includes('release');
 const VERBOSE = process.argv.includes('verbose');
@@ -45,7 +46,7 @@ const JS_LOADER = {
 
 const config = {
   output: {
-    publicPath: '/',
+    //publicPath: '/',
     sourcePrefix: '  ',
   },
 
@@ -121,7 +122,9 @@ const appConfig = merge({}, config, {
   },
   output: {
     path: path.join(__dirname, '../build/public'),
+    pathinfo: DEBUG,
     filename: '[name].js',
+    publicPath: globals.publicUrl + '/'
   },
 
   // Choose a developer tool to enhance debugging

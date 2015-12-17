@@ -1,5 +1,6 @@
 import glob from 'glob';
 import { join, basename, extname } from 'path';
+import globals from '../../src/globals';
 
 export default function(source) {
   this.cacheable();
@@ -17,7 +18,7 @@ export default function(source) {
         path = '/'
       }
 
-      return `  '${path}': () => new Promise(resolve => require(['./content/${file}'], resolve)),`;
+      return `  '${globals.publicUrl}${path}': () => new Promise(resolve => require(['./content/${file}'], resolve)),`;
     });
 
     if (lines.length) {

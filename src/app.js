@@ -7,6 +7,8 @@ import Router from './routes';
 import Location from './core/Location';
 import { addEventListener, removeEventListener } from './utils/DOMUtils';
 
+console.log("HELLO WORLD");
+
 let cssContainer = document.getElementById('css');
 const appContainer = document.getElementById('app');
 const context = {

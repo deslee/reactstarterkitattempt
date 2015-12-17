@@ -10,6 +10,7 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import NotFoundPage from './components/NotFoundPage';
 import ErrorPage from './components/ErrorPage';
+import globals from './globals'
 
 export const routes = {}; // Auto-generated via webpack loader. See tools/lib/routes-loader.js
 
@@ -19,17 +20,21 @@ const router = new Router(on => {
     return component && <App context={state.context}>{component}</App>;
   });
 
-  on('/contact', async () => <ContactPage />);
+  on(globals.publicUrl+'/contact', async () => <ContactPage />);
 
-  on('/login', async () => <LoginPage />);
+  on(globals.publicUrl+'/login', async () => <LoginPage />);
 
-  on('/register', async () => <RegisterPage />);
+  on(globals.publicUrl+'/register', async () => <RegisterPage />);
 
   on('*', async (state) => {
-    var handler = routes[state.path];
+    var reqPath = state.path;
+    if (reqPath.length > globals.publicUrl.length+1 && reqPath.charAt(reqPath.length-1) === '/') {
+      reqPath = reqPath.slice(0, reqPath.length-1);
+    }
+    console.log('route path', reqPath);
+    var handler = routes[reqPath];
     var result = await handler();
-    result.path = state.path;
-    //const content = await http.get(`/api/content?path=${state.path}`);
+    result.path = reqPath;
     return result && <ContentPage {...result} />;
   });
 

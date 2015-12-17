@@ -9,6 +9,7 @@ class Html extends Component {
     title: PropTypes.string,
     description: PropTypes.string,
     css: PropTypes.string,
+    base: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
   };
 
@@ -32,6 +33,7 @@ class Html extends Component {
     return (
       <html className="no-js" lang="">
       <head>
+        <base href={this.props.base} />
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <title>{this.props.title}</title>
@@ -42,7 +44,7 @@ class Html extends Component {
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{__html: this.props.body}} />
-        <script src="/app.js"></script>
+        <script src="app.js"></script>
         <script dangerouslySetInnerHTML={this.trackingCode()} />
       </body>
       </html>

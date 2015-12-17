@@ -13,7 +13,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import task from './lib/task';
 
-global.WATCH = true;
+global.WATCH = false;
 const webpackConfig = require('./config')[0]; // Client-side bundle configuration
 const bundler = webpack(webpackConfig);
 
