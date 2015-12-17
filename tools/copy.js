@@ -20,10 +20,11 @@ import watch from './lib/watch';
 export default task('copy', async () => {
   await Promise.all([
     copy('src/public', 'build/public'),
-    copy('src/content', 'build/content'),
-    copy('package.json', 'build/package.json'),
+    //copy('src/content', 'build/content'),
+    //copy('package.json', 'build/package.json'),
   ]);
 
+/*
   replace({
     regex: '"start".*',
     replacement: '"start": "node server.js"',
@@ -31,6 +32,7 @@ export default task('copy', async () => {
     recursive: false,
     silent: false,
   });
+*/
 
   if (global.WATCH) {
     const watcher = await watch('src/content/**/*.*');

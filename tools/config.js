@@ -10,6 +10,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import merge from 'lodash.merge';
+var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 
 const DEBUG = !process.argv.includes('release');
 const VERBOSE = process.argv.includes('verbose');
@@ -112,13 +113,15 @@ const config = {
 // -----------------------------------------------------------------------------
 
 const appConfig = merge({}, config, {
-  entry: [
-    ...(WATCH ? ['webpack-hot-middleware/client'] : []),
-    './src/app.js',
-  ],
+  entry: {
+    'app': [
+      ...(WATCH ? ['webpack-hot-middleware/client'] : []),
+      './src/app.js'
+    ]
+  },
   output: {
     path: path.join(__dirname, '../build/public'),
-    filename: 'app.js',
+    filename: '[name].js',
   },
 
   // Choose a developer tool to enhance debugging
