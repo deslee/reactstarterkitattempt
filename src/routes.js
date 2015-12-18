@@ -19,7 +19,7 @@ console.log('available dynamic routes', Object.keys(routes))
 const router = new Router(on => {
   on('*', async (state, next) => {
     const component = await next();
-    return component && <App context={state.context}>{component}</App>;
+    return component && <App context={state.context} error={state.error}>{component}</App>;
   });
 
   on(globals.publicUrl+'/contact', async () => <ContactPage />);
@@ -28,6 +28,14 @@ const router = new Router(on => {
 
   on(globals.publicUrl+'/register', async () => <RegisterPage />);
 
+  on(globals.publicUrl+'/not-found', async (state) => {
+    state.error = {
+      code: '404'
+    };
+
+    return <NotFoundPage />
+  });
+
   on('*', async (state) => {
     var reqPath = state.path;
     if (reqPath.length > globals.publicUrl.length+1 && reqPath.charAt(reqPath.length-1) === '/') {
@@ -35,15 +43,17 @@ const router = new Router(on => {
     }
     console.log('route path', reqPath);
     var handler = routes[reqPath];
-    var result = await handler();
-    result.path = reqPath;
-    return result && <ContentPage {...result} />;
+    if (handler) {
+      var result = await handler();
+      result.path = reqPath;
+      return result && <ContentPage {...result} />;
+    } else {
+      state.error = {
+        code: '404'
+      };
+      return <NotFoundPage />
+    }
   });
-
-  on('error', (state, error) => state.statusCode === 404 ?
-    <App context={state.context} error={error}><NotFoundPage /></App> :
-    <App context={state.context} error={error}><ErrorPage /></App>
-  );
 });
 
 export default router;

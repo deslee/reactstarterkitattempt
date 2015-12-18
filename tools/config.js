@@ -184,11 +184,58 @@ const appConfig = merge({}, config, {
 // Configuration for the server-side bundle (server.js)
 // -----------------------------------------------------------------------------
 
-const serverConfig = merge({}, config, {
+const renderConfig = merge({}, config, {
   entry: './src/render.js',
   output: {
     path: './build',
     filename: 'render.js',
+    libraryTarget: 'commonjs2',
+  },
+  target: 'node',
+  externals: [
+    function filter(context, request, cb) {
+      const isExternal =
+        request.match(/^[a-z][a-z\/\.\-0-9]*$/i) &&
+        !request.match(/^react-routing/) &&
+        !context.match(/[\\/]react-routing/);
+      cb(null, Boolean(isExternal));
+    },
+  ],
+  node: {
+    console: false,
+    global: false,
+    process: false,
+    Buffer: false,
+    __filename: false,
+    __dirname: false,
+  },
+  plugins: [
+    ...config.plugins,
+    new webpack.DefinePlugin(GLOBALS),
+    new webpack.BannerPlugin('require("source-map-support").install();',
+      { raw: true, entryOnly: false }),
+  ],
+  module: {
+    loaders: [
+      JS_LOADER,
+      ...config.module.loaders,
+      {
+        test: /\.css$/,
+        loader: 'css-loader!postcss-loader',
+      },
+    ],
+  },
+});
+
+//
+// Configuration for the server-side bundle (server.js)
+// -----------------------------------------------------------------------------
+
+const serverConfig = merge({}, config, {
+  entry: './src/server.js',
+  output: {
+    path: './build',
+    filename: 'server.js',
     libraryTarget: 'commonjs2',
   },
   target: 'node',
@@ -228,4 +275,4 @@ const serverConfig = merge({}, config, {
   },
 });
 
-export default [appConfig, serverConfig];
+export default [appConfig, renderConfig, serverConfig];

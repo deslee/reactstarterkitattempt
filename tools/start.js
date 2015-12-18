@@ -13,7 +13,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import task from './lib/task';
 
-global.WATCH = false;
+global.WATCH = true;
 const webpackConfig = require('./config')[0]; // Client-side bundle configuration
 const bundler = webpack(webpackConfig);
 
@@ -23,7 +23,7 @@ const bundler = webpack(webpackConfig);
  */
 export default task('start', async () => {
   await require('./build')();
-  await require('./render')();
+  await require('./serve')();
 
   browserSync({
     proxy: {

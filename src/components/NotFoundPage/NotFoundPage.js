@@ -8,14 +8,14 @@ import styles from './NotFoundPage.css';
 class NotFoundPage extends Component {
 
   static contextTypes = {
-    onSetTitle: PropTypes.func.isRequired,
-    onPageNotFound: PropTypes.func.isRequired,
+    onSetTitle: PropTypes.func.isRequired
+    //onPageNotFound: PropTypes.func.isRequired
   };
 
   render() {
     const title = 'Page Not Found';
     this.context.onSetTitle(title);
-    this.context.onPageNotFound();
+    //this.context.onPageNotFound();
     return (
       <div>
         <h1>{title}</h1>

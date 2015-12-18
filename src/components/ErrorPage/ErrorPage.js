@@ -9,7 +9,7 @@ class ErrorPage extends Component {
 
   static contextTypes = {
     onSetTitle: PropTypes.func.isRequired,
-    onPageNotFound: PropTypes.func.isRequired,
+    //onPageNotFound: PropTypes.func.isRequired,
   };
 
   render() {

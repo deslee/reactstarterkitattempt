@@ -93,8 +93,9 @@ function run() {
 
 // Run the application when both DOM is ready
 // and page content is loaded
-if (window.addEventListener) {
+/*if (window.addEventListener) {
   window.addEventListener('DOMContentLoaded', run);
 } else {
   window.attachEvent('onload', run);
-}
+}*/
+run();

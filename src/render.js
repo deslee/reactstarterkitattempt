@@ -21,8 +21,7 @@ Object.keys(routes).concat(customRoutes).forEach(async route => {
   const context = {
     onInsertCss: value => css.push(value),
     onSetTitle: value => data.title = value,
-    onSetMeta: (key, value) => data[key] = value,
-    onPageNotFound: () => statusCode = 404
+    onSetMeta: (key, value) => data[key] = value
   };
 
   console.log("dispatching", route);
@@ -30,9 +29,13 @@ Object.keys(routes).concat(customRoutes).forEach(async route => {
   console.log('write path', writePath);
 
   await Router.dispatch({ path: route, context }, (state, component) => {
-    console.log("dispatched ", route);
-    data.body = ReactDOM.renderToString(component);
-    data.css = css.join('');
+    try {
+      data.body = ReactDOM.renderToString(component);
+      data.css = css.join('');
+      console.log("dispatched ", route);
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   if (globals.publicUrl == '') {
