@@ -19,7 +19,9 @@ Object.keys(routes).concat(customRoutes).forEach(async route => {
   const data = { title: '', description: '', css: '', body: '' };
   const css = [];
   const context = {
-    onInsertCss: value => css.push(value),
+    onInsertCss: value => {
+      css.push(value)
+    },
     onSetTitle: value => data.title = value,
     onSetMeta: (key, value) => data[key] = value
   };

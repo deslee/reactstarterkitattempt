@@ -2,7 +2,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import withStyles from '../../decorators/withStyles';
-import styles from '!!style-loader/useable!css-loader!postcss-loader!./NotFoundPage.css';
+import styles from './NotFoundPage.extra.css';
 
 @withStyles(styles)
 class NotFoundPage extends Component {

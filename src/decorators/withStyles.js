@@ -48,22 +48,26 @@ function withStyles(styles) {
     }
 
     componentWillMount() {
-      if (canUseDOM) {
-        invariant(styles.use, `The style-loader must be configured with reference-counted API.`);
-        styles.use();
-      } else {
-        this.context.onInsertCss(styles.toString());
+      if (styles) {
+        if (canUseDOM) {
+          invariant(styles.use, `The style-loader must be configured with reference-counted API.`);
+          styles.use();
+        } else {
+          this.context.onInsertCss(styles.toString());
+        }
       }
     }
 
     componentWillUnmount() {
-      styles.unuse();
-      if (this.styleId) {
-        this.refCount--;
-        if (this.refCount < 1) {
-          const style = document.getElementById(this.styleId);
-          if (style) {
-            style.parentNode.removeChild(style);
+      if (styles) {
+        styles.unuse();
+        if (this.styleId) {
+          this.refCount--;
+          if (this.refCount < 1) {
+            const style = document.getElementById(this.styleId);
+            if (style) {
+              style.parentNode.removeChild(style);
+            }
           }
         }
       }

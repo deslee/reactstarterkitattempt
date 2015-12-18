@@ -80,7 +80,7 @@ const config = {
   module: {
     loaders: [
       {
-        test: /\.css$/,
+        test: /^((?!\.extra\.).)*.css$/,
         loader: ExtractTextPlugin.extract('css-loader!postcss-loader'),
       },
       {
@@ -179,6 +179,10 @@ const appConfig = merge({}, config, {
           },
         },
       } : JS_LOADER,
+      {
+        test: /\.extra.css$/,
+        loader: 'style-loader/useable!css-loader!postcss-loader',
+      },
       ...config.module.loaders,
     ],
   },
@@ -222,6 +226,10 @@ const renderConfig = merge({}, config, {
   module: {
     loaders: [
       JS_LOADER,
+      {
+        test: /\.extra.css$/,
+        loader: 'css-loader!postcss-loader',
+      },
       ...config.module.loaders,
     ],
   },
@@ -267,6 +275,10 @@ const serverConfig = merge({}, config, {
     loaders: [
       JS_LOADER,
       ...config.module.loaders,
+      {
+        test: /\.extra.css$/,
+        loader: 'css-loader!postcss-loader',
+      },
     ],
   },
 });
