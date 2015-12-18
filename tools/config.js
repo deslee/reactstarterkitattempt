@@ -10,7 +10,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import merge from 'lodash.merge';
-var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+
 import globals from '../src/globals'
 
 const DEBUG = !process.argv.includes('release');
@@ -67,6 +68,9 @@ const config = {
 
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
+    new ExtractTextPlugin("style.css", {
+      allChunks: true
+    })
   ],
 
   resolve: {
@@ -75,6 +79,10 @@ const config = {
 
   module: {
     loaders: [
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('css-loader!postcss-loader'),
+      },
       {
         test: /routes.js$/,
         loader: path.join(__dirname, './lib/routes-loader.js'),
@@ -172,10 +180,6 @@ const appConfig = merge({}, config, {
         },
       } : JS_LOADER,
       ...config.module.loaders,
-      {
-        test: /\.css$/,
-        loader: 'style-loader/useable!css-loader!postcss-loader',
-      },
     ],
   },
 });
@@ -219,10 +223,6 @@ const renderConfig = merge({}, config, {
     loaders: [
       JS_LOADER,
       ...config.module.loaders,
-      {
-        test: /\.css$/,
-        loader: 'css-loader!postcss-loader',
-      },
     ],
   },
 });
@@ -267,10 +267,6 @@ const serverConfig = merge({}, config, {
     loaders: [
       JS_LOADER,
       ...config.module.loaders,
-      {
-        test: /\.css$/,
-        loader: 'css-loader!postcss-loader',
-      },
     ],
   },
 });

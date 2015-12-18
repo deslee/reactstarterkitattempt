@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import withStyles from '../../decorators/withStyles';
 import styles from './TextBox.css';
 
-@withStyles(styles)
+//@withStyles(styles)
 class TextBox extends Component {
 
   static propTypes = {

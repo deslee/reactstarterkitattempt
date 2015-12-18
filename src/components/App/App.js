@@ -9,7 +9,7 @@ import Feedback from '../Feedback';
 import Footer from '../Footer';
 
 @withContext
-@withStyles(styles)
+//@withStyles(styles)
 class App extends Component {
 
   static propTypes = {

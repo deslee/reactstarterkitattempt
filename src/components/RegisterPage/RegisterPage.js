@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import withStyles from '../../decorators/withStyles';
 import styles from './RegisterPage.css';
 
-@withStyles(styles)
+//@withStyles(styles)
 class RegisterPage extends Component {
 
   static contextTypes = {

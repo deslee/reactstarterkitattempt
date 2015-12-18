@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import styles from './ContactPage.css';
 import withStyles from '../../decorators/withStyles';
 
-@withStyles(styles)
+//@withStyles(styles)
 class ContactPage extends Component {
 
   static contextTypes = {

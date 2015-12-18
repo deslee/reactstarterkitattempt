@@ -6,7 +6,7 @@ import withStyles from '../../decorators/withStyles';
 import Link from '../Link';
 import Navigation from '../Navigation';
 
-@withStyles(styles)
+//@withStyles(styles)
 class Header extends Component {
 
   render() {
