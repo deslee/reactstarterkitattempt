@@ -185,10 +185,10 @@ const appConfig = merge({}, config, {
 // -----------------------------------------------------------------------------
 
 const serverConfig = merge({}, config, {
-  entry: './src/server.js',
+  entry: './src/render.js',
   output: {
     path: './build',
-    filename: 'server.js',
+    filename: 'render.js',
     libraryTarget: 'commonjs2',
   },
   target: 'node',
