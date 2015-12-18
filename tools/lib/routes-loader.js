@@ -18,7 +18,11 @@ export default function(source) {
         path = '/'
       }
 
-      return `  '${globals.publicUrl}${path}': () => new Promise(resolve => require(['./content/${file}'], resolve)),`;
+      if (globals.publicUrl.length) {
+        path = globals.publicUrl + path;
+      }
+
+      return `  '${path}': () => new Promise(resolve => require(['./content/${file}'], resolve)),`;
     });
 
     if (lines.length) {

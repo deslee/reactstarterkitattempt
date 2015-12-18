@@ -14,6 +14,8 @@ import globals from './globals'
 
 export const routes = {}; // Auto-generated via webpack loader. See tools/lib/routes-loader.js
 
+console.log('available dynamic routes', Object.keys(routes))
+
 const router = new Router(on => {
   on('*', async (state, next) => {
     const component = await next();

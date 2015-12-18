@@ -32,17 +32,22 @@ Object.keys(routes).concat(customRoutes).forEach(async route => {
   };
 
   console.log("dispatching", route);
+  const writePath = path.relative(globals.publicUrl.length ? globals.publicUrl : '/', route)
+  console.log('write path', writePath);
+
   await Router.dispatch({ path: route, context }, (state, component) => {
     console.log("dispatched ", route);
     data.body = ReactDOM.renderToString(component);
     data.css = css.join('');
   });
 
-  data.base = globals.publicUrl + '/'
+  if (globals.publicUrl == '') {
+    data.base = '/'
+  } else {
+    data.base = globals.publicUrl + '/';
+  }
 
   const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
-
-  const writePath = path.relative(globals.publicUrl, route)
   const filePath = path.join(__dirname, 'public', writePath, 'index.html');
 
   console.log("writing to", filePath);
